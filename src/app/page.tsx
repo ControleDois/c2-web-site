@@ -1,69 +1,210 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Check } from "lucide-react";
+import { ButtonLink, Section, SectionHeading } from "@/components/ui";
+import { FEATURES, NICHES, STEPS } from "@/lib/content";
+import { getLatestPosts } from "@/lib/blog";
+import { APP_URL, BLOG_URL, SITE_URL, contactHref } from "@/lib/site";
 
-export default function Home() {
+const MODULES = ["Vendas", "Financeiro", "Notas fiscais", "Estoque", "PDV", "Cobrança"];
+
+function formatDate(value: string | null) {
+  if (!value) return "";
+  return new Date(value).toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
+}
+
+export default async function Home() {
+  const posts = await getLatestPosts(3);
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        name: "Controle Dois",
+        url: SITE_URL,
+        logo: `${SITE_URL}/logo.png`,
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: "Controle Dois",
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+        url: SITE_URL,
+      },
+    ],
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-100 to-white">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <p className="inline-block rounded-full bg-white px-3.5 py-1.5 text-[12.5px] font-semibold text-brand-700 ring-1 ring-line">
+              Gestão para vários segmentos
+            </p>
+            <h1 className="mt-5 text-[38px] font-bold leading-[1.08] tracking-tight text-ink sm:text-[54px]">
+              O sistema que se adapta ao seu negócio
+            </h1>
+            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink-soft">
+              Vendas, financeiro, notas fiscais, estoque e PDV em um só lugar, com as telas e os recursos do seu segmento já
+              prontos para usar.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href={contactHref()}>Falar com a gente</ButtonLink>
+              <ButtonLink href="/nichos" variant="ghost">
+                Ver segmentos
+              </ButtonLink>
+            </div>
+            <p className="mt-5 text-[13.5px] text-ink-soft">
+              Já é cliente?{" "}
+              <a href={APP_URL} className="font-semibold text-brand-700 hover:underline">
+                Entre no sistema
+              </a>
+            </p>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-md">
+            <div className="rounded-3xl bg-white p-6 shadow-[0_30px_60px_-30px_rgba(11,95,166,0.35)] ring-1 ring-line">
+              <div className="flex items-center gap-3">
+                <Image src="/logo.png" alt="" width={44} height={42} />
+                <div>
+                  <p className="text-[15px] font-bold text-ink">Controle Dois</p>
+                  <p className="text-[12.5px] text-muted">Tudo da sua empresa em um só lugar</p>
+                </div>
+              </div>
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                {MODULES.map((module) => (
+                  <div key={module} className="flex items-center gap-2.5 rounded-2xl bg-brand-100 px-4 py-3.5">
+                    <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-brand-500 text-white">
+                      <Check size={13} strokeWidth={3} />
+                    </span>
+                    <span className="text-[14px] font-semibold text-brand-900">{module}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Section id="recursos">
+        <SectionHeading
+          eyebrow="Recursos"
+          title="Tudo o que a empresa precisa no dia a dia"
+          text="Do balcão ao financeiro, cada área conversa com as outras: a venda baixa o estoque, gera a conta e emite a nota."
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map((feature) => (
+            <div key={feature.title} className="rounded-2xl border border-line bg-white p-6 transition hover:border-brand-300">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+                <feature.icon size={22} />
+              </span>
+              <h3 className="mt-5 text-[16px] font-bold text-ink">{feature.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{feature.text}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section tone="soft">
+        <SectionHeading
+          eyebrow="Segmentos"
+          title="Uma versão para cada tipo de negócio"
+          text="Ao cadastrar a empresa você escolhe o segmento, e o sistema já abre com os menus e as telas certas."
+        />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {NICHES.slice(0, 6).map((niche) => (
+            <Link
+              key={niche.slug}
+              href={`/nichos#${niche.slug}`}
+              className="group rounded-2xl border border-line bg-white p-6 transition hover:border-brand-300"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+                <niche.icon size={22} />
+              </span>
+              <h3 className="mt-5 text-[16px] font-bold text-ink">{niche.name}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{niche.text}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-700">
+                Saiba mais <ArrowRight size={14} className="transition group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <ButtonLink href="/nichos" variant="ghost">
+            Ver todos os segmentos
+          </ButtonLink>
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeading eyebrow="Como funciona" title="Comece em três passos" center />
+        <ol className="mt-12 grid gap-6 md:grid-cols-3">
+          {STEPS.map((step, index) => (
+            <li key={step.title} className="rounded-2xl border border-line bg-white p-7">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500 text-[16px] font-bold text-white">
+                {index + 1}
+              </span>
+              <h3 className="mt-5 text-[17px] font-bold text-ink">{step.title}</h3>
+              <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {posts.length > 0 && (
+        <Section tone="soft">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading eyebrow="Blog" title="Para ler e aprender" text="Dicas de gestão, novidades do sistema e conteúdo para o seu segmento." />
+            <a href={BLOG_URL} className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-brand-700 hover:underline">
+              Ver todos os artigos <ArrowRight size={14} />
+            </a>
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {posts.map((post) => (
+              <a
+                key={post.id}
+                href={`${BLOG_URL}/${post.slug}`}
+                className="group overflow-hidden rounded-2xl border border-line bg-white transition hover:border-brand-300"
+              >
+                {post.cover_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={post.cover_url} alt={post.cover_alt ?? ""} className="aspect-[16/9] w-full object-cover" loading="lazy" />
+                ) : (
+                  <div className="aspect-[16/9] w-full bg-brand-100" />
+                )}
+                <div className="p-5">
+                  {post.category && <p className="text-[12px] font-bold uppercase tracking-wide text-brand-500">{post.category}</p>}
+                  <h3 className="mt-1.5 text-[16.5px] font-bold leading-snug text-ink group-hover:text-brand-700">{post.title}</h3>
+                  {post.excerpt && <p className="mt-2 line-clamp-3 text-[14px] leading-relaxed text-ink-soft">{post.excerpt}</p>}
+                  <p className="mt-4 text-[12.5px] text-muted">
+                    {formatDate(post.published_at)} · {post.reading_minutes} min de leitura
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      <Section tone="brand">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-[30px] font-bold leading-tight tracking-tight sm:text-[38px]">
+            Vamos organizar a sua empresa?
+          </h2>
+          <p className="mt-4 text-[16.5px] leading-relaxed text-brand-100">
+            Conte um pouco do seu negócio e mostramos como o Controle Dois pode ajudar.
           </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <ButtonLink href={contactHref()} variant="light">
+              Falar com a gente
+            </ButtonLink>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </Section>
+    </>
   );
 }
