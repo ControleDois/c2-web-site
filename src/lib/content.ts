@@ -153,15 +153,15 @@ export const NICHES: Niche[] = [
 
 export const STEPS = [
   {
-    title: "Cadastre sua empresa",
-    text: "Informe os dados da empresa e escolha o segmento. O sistema já nasce com os menus e as telas do seu tipo de negócio.",
+    title: "Crie sua conta",
+    text: "Informe o nome da empresa, o e-mail e uma senha. Sem cartão de crédito e sem burocracia.",
   },
   {
-    title: "Configure do seu jeito",
-    text: "Produtos, formas de pagamento, impressoras, notas fiscais e integrações bancárias, tudo pelo painel.",
+    title: "Escolha seu segmento",
+    text: "Um passo a passo guiado pergunta o tipo do seu negócio e os dados da empresa. Com o CNPJ, o endereço vem preenchido.",
   },
   {
-    title: "Venda, cobre e emita notas",
-    text: "Comece a vender no balcão, no celular ou online, acompanhe o caixa e deixe as cobranças com o sistema.",
+    title: "Use por 7 dias grátis",
+    text: "Cadastre produtos, venda, cobre e emita notas. Depois do teste, é só falar com a gente para ativar a assinatura.",
   },
 ];

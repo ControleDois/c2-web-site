@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { APP_URL, BLOG_URL, contactHref } from "@/lib/site";
+import { APP_URL, BLOG_URL, SIGNUP_URL, TRIAL_DAYS } from "@/lib/site";
 
 const LINKS = [
   { href: "/recursos", label: "Recursos" },
@@ -44,10 +44,10 @@ export default function Header() {
             Entrar
           </a>
           <a
-            href={contactHref()}
+            href={SIGNUP_URL}
             className="rounded-xl bg-brand-500 px-4 py-2 text-[14px] font-semibold text-white transition hover:bg-brand-700"
           >
-            Falar com a gente
+            Testar {TRIAL_DAYS} dias grátis
           </a>
         </div>
 
@@ -79,8 +79,8 @@ export default function Header() {
             <a href={APP_URL} className="rounded-xl border border-line px-4 py-3 text-center text-[14px] font-semibold text-brand-700">
               Entrar
             </a>
-            <a href={contactHref()} className="rounded-xl bg-brand-500 px-4 py-3 text-center text-[14px] font-semibold text-white">
-              Falar com a gente
+            <a href={SIGNUP_URL} className="rounded-xl bg-brand-500 px-4 py-3 text-center text-[14px] font-semibold text-white">
+              Testar {TRIAL_DAYS} dias grátis
             </a>
           </div>
         </div>

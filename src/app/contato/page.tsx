@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Mail, MessageCircle, LogIn } from "lucide-react";
+import { Mail, MessageCircle, LogIn, Rocket } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui";
-import { APP_URL, CONTACT_EMAIL, whatsappLink } from "@/lib/site";
+import { APP_URL, CONTACT_EMAIL, SIGNUP_URL, TRIAL_DAYS, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contato",
@@ -12,6 +12,13 @@ export const metadata: Metadata = {
 export default function ContatoPage() {
   const whatsapp = whatsappLink();
   const cards = [
+    {
+      icon: Rocket,
+      title: `Teste grátis por ${TRIAL_DAYS} dias`,
+      text: "Crie a conta em 2 minutos, sem cartão de crédito, e escolha o seu segmento.",
+      href: SIGNUP_URL,
+      action: "Criar conta grátis",
+    },
     whatsapp && {
       icon: MessageCircle,
       title: "WhatsApp",
@@ -41,7 +48,7 @@ export default function ContatoPage() {
         <SectionHeading eyebrow="Contato" title="Vamos conversar?" text="Escolha o canal que for melhor para você." />
       </Section>
       <Section>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
             <a key={card.title} href={card.href} className="rounded-2xl border border-line bg-white p-7 transition hover:border-brand-300">
               <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100 text-brand-700">

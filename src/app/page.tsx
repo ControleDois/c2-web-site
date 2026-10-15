@@ -4,7 +4,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { ButtonLink, Section, SectionHeading } from "@/components/ui";
 import { FEATURES, NICHES, STEPS } from "@/lib/content";
 import { getLatestPosts } from "@/lib/blog";
-import { APP_URL, BLOG_URL, SITE_URL, contactHref } from "@/lib/site";
+import { APP_URL, BLOG_URL, SIGNUP_URL, SITE_URL, TRIAL_DAYS, contactHref } from "@/lib/site";
 
 const MODULES = ["Vendas", "Financeiro", "Notas fiscais", "Estoque", "PDV", "Cobrança"];
 
@@ -53,12 +53,15 @@ export default async function Home() {
               prontos para usar.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href={contactHref()}>Falar com a gente</ButtonLink>
-              <ButtonLink href="/nichos" variant="ghost">
-                Ver segmentos
+              <ButtonLink href={SIGNUP_URL}>Testar grátis por {TRIAL_DAYS} dias</ButtonLink>
+              <ButtonLink href={contactHref()} variant="ghost">
+                Falar com a gente
               </ButtonLink>
             </div>
-            <p className="mt-5 text-[13.5px] text-ink-soft">
+            <p className="mt-4 text-[13.5px] text-ink-soft">
+              Sem cartão de crédito. Em 2 minutos você cria a conta e escolhe o seu segmento.
+            </p>
+            <p className="mt-2 text-[13.5px] text-ink-soft">
               Já é cliente?{" "}
               <a href={APP_URL} className="font-semibold text-brand-700 hover:underline">
                 Entre no sistema
@@ -193,13 +196,16 @@ export default async function Home() {
       <Section tone="brand">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-[30px] font-bold leading-tight tracking-tight sm:text-[38px]">
-            Vamos organizar a sua empresa?
+            Comece hoje, sem compromisso
           </h2>
           <p className="mt-4 text-[16.5px] leading-relaxed text-brand-100">
-            Conte um pouco do seu negócio e mostramos como o Controle Dois pode ajudar.
+            Crie a conta em 2 minutos e use por {TRIAL_DAYS} dias grátis, sem cartão de crédito.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={contactHref()} variant="light">
+            <ButtonLink href={SIGNUP_URL} variant="light">
+              Testar grátis por {TRIAL_DAYS} dias
+            </ButtonLink>
+            <ButtonLink href={contactHref()} variant="ghost">
               Falar com a gente
             </ButtonLink>
           </div>

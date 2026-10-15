@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { APP_URL, BLOG_URL, CONTACT_EMAIL } from "@/lib/site";
+import { APP_URL, BLOG_URL, CONTACT_EMAIL, SIGNUP_URL, TRIAL_DAYS } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -29,6 +29,7 @@ export default function Footer() {
         <div>
           <p className="text-[13px] font-bold uppercase tracking-wide text-ink">Acesso</p>
           <ul className="mt-4 flex flex-col gap-2.5 text-[14px] text-ink-soft">
+            <li><a href={SIGNUP_URL} className="hover:text-brand-700">Testar {TRIAL_DAYS} dias grátis</a></li>
             <li><a href={APP_URL} className="hover:text-brand-700">Entrar no sistema</a></li>
             {CONTACT_EMAIL && (
               <li><a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-brand-700">{CONTACT_EMAIL}</a></li>
@@ -37,7 +38,9 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-line py-5 text-center text-[12.5px] text-muted">
-        © {new Date().getFullYear()} Controle Dois. Todos os direitos reservados.
+        © {new Date().getFullYear()} Controle Dois. Todos os direitos reservados. ·{" "}
+        <Link href="/termos-de-uso" className="hover:text-brand-700">Termos de uso</Link> ·{" "}
+        <Link href="/politica-de-privacidade" className="hover:text-brand-700">Privacidade</Link>
       </div>
     </footer>
   );

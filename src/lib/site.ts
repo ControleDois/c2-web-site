@@ -5,7 +5,8 @@ export const BLOG_URL = (process.env.NEXT_PUBLIC_BLOG_URL ?? "https://blog.contr
 const DEFAULT_API_URL = process.env.NODE_ENV === "production" ? "https://api.grupoamsfacilita.com.br" : "http://localhost:3333";
 export const API_URL = (process.env.API_URL ?? DEFAULT_API_URL).replace(/\/+$/, "");
 
-const whatsapp = (process.env.NEXT_PUBLIC_WHATSAPP ?? "").replace(/\D/g, "");
+// Sem NEXT_PUBLIC_WHATSAPP configurado, usa o WhatsApp do suporte já divulgado no rodapé do sistema.
+const whatsapp = (process.env.NEXT_PUBLIC_WHATSAPP ?? "5565992819663").replace(/\D/g, "");
 export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
 
 export function whatsappLink(message = "Olá! Quero conhecer o Controle Dois.") {
@@ -18,3 +19,7 @@ export function contactHref(message?: string) {
 }
 
 export const WHATSAPP_ENABLED = Boolean(whatsapp);
+
+// Teste grátis: o botão leva direto à criação de conta no sistema.
+export const TRIAL_DAYS = 7;
+export const SIGNUP_URL = `${APP_URL}/?cadastro=1`;
