@@ -4,6 +4,8 @@ import { ArrowRight, Check } from "lucide-react";
 import { ButtonLink, Section, SectionHeading } from "@/components/ui";
 import { FEATURES, NICHES, STEPS } from "@/lib/content";
 import { getLatestPosts } from "@/lib/blog";
+import { getPlans } from "@/lib/plans";
+import PlansSection from "@/components/PlansSection";
 import { APP_URL, BLOG_URL, SIGNUP_URL, SITE_URL, TRIAL_DAYS, contactHref } from "@/lib/site";
 
 const MODULES = ["Vendas", "Financeiro", "Notas fiscais", "Estoque", "PDV", "Cobrança"];
@@ -14,7 +16,7 @@ function formatDate(value: string | null) {
 }
 
 export default async function Home() {
-  const posts = await getLatestPosts(3);
+  const [posts, { plans, catalog }] = await Promise.all([getLatestPosts(3), getPlans()]);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -142,6 +144,20 @@ export default async function Home() {
           </ButtonLink>
         </div>
       </Section>
+
+      {plans.length > 0 && (
+        <Section id="planos" tone="soft">
+          <SectionHeading
+            eyebrow="Planos"
+            title="Planos para cada fase do seu negócio"
+            text={`Teste grátis por ${TRIAL_DAYS} dias, sem cartão de crédito. Assine quando quiser e pague por PIX.`}
+            center
+          />
+          <div className="mt-10">
+            <PlansSection plans={plans} catalog={catalog} />
+          </div>
+        </Section>
+      )}
 
       <Section>
         <SectionHeading eyebrow="Como funciona" title="Comece em três passos" center />

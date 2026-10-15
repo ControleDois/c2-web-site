@@ -21,6 +21,7 @@ export default function Footer() {
           <ul className="mt-4 flex flex-col gap-2.5 text-[14px] text-ink-soft">
             <li><Link href="/recursos" className="hover:text-brand-700">Recursos</Link></li>
             <li><Link href="/nichos" className="hover:text-brand-700">Segmentos</Link></li>
+            <li><Link href="/planos" className="hover:text-brand-700">Planos</Link></li>
             <li><a href={BLOG_URL} className="hover:text-brand-700">Blog</a></li>
             <li><Link href="/contato" className="hover:text-brand-700">Contato</Link></li>
           </ul>

@@ -9,6 +9,7 @@ import { APP_URL, BLOG_URL, SIGNUP_URL, TRIAL_DAYS } from "@/lib/site";
 const LINKS = [
   { href: "/recursos", label: "Recursos" },
   { href: "/nichos", label: "Segmentos" },
+  { href: "/planos", label: "Planos" },
   { href: BLOG_URL, label: "Blog", external: true },
   { href: "/contato", label: "Contato" },
 ];
